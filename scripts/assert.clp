@@ -1,0 +1,5 @@
+(assert (not_bomb (row 0) (col 0)))
+(assert (to_check 0 0))
+(assert (total_bomb (n 0)))
+(assert (value_cell (row 0) (col 0) (val 0)))
+(assert (value_cell (row 0) (col 1) (val 0)))

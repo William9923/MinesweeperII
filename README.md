@@ -7,6 +7,10 @@ Jonathan Yudi Gunawan (13518084)
 Annisa Ayu Pramesti  (13518085)
 William (13518138)
 
+### Dependencies 
+1. PySimpleGUI
+2. ClipsPy
+
 ### How to setup
 1. Install virtualenv if you haven't
 ```bash
