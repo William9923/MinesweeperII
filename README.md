@@ -1,4 +1,4 @@
-# Tugas Besar 1 IF 3170 Intelejensi Buatan
+# Tugas Besar II IF 3170 Intelejensi Buatan
 ---
 
 ### Anggota
