@@ -21,17 +21,17 @@ def generate_facts(board_size, list_bomb):
     for i in range(len(board)):
       for j in range(len(board)):
         facts = "(value_cell (row " + str(i) + ") (col " + str(j) + ") (val " + str(board[i][j]) + "))"
-        print(facts)
         list_facts.append(facts)
     
     # Initial
     list_facts.append("(board_size (n " + str(board_size) + "))")
     list_facts.append("(total_bomb (n " + str(len(list_bomb)) + "))")
     list_facts.append("(not_bomb (row 0) (col 0))")
-    list_facts.append("(to_check 0 0)")
+    list_facts.append("(to_open 0 0 0)")
 
-    for el in list_bomb:
-      list_facts.append(f"(bomb (row {el[0]}) (col {el[1]})))")
+    # for el in list_bomb:
+    #   list_facts.append(f"(bomb (row {el[0]}) (col {el[1]})))")
+    # list_facts.append("(bomb (row 3) (col 3)))")
     return list_facts
 
 if __name__ == "__main__":
