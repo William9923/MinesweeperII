@@ -15,10 +15,18 @@ class GUI():
     def init_loading_screen(self):
         layout = [
             [sg.T('MINESWEEPER', font='Any 20', justification='center')],
-             [sg.T('💣', font='Any 20', justification='center')],
+            [sg.T('💣', font='Any 20', justification='center')],
             [sg.ProgressBar(150, orientation='h', size=(25, 3), key='progbar')]
         ]
-        self.loading_window = sg.Window('Loading Screen', layout, element_justification='center',no_titlebar=True, keep_on_top=True, grab_anywhere=False, alpha_channel=0.85)
+        self.loading_window = sg.Window(
+            'Loading Screen',
+            layout,
+            element_justification='center',
+            no_titlebar=True,
+            keep_on_top=True,
+            grab_anywhere=False, 
+            alpha_channel=0.85)
+        
         for i in range(150):
             event, values = self.loading_window.read(timeout=10)          
             self.loading_window['progbar'].update_bar(i + 1)
@@ -35,8 +43,13 @@ class GUI():
 
     def init_game_status(self):
         layout = [
-            [sg.Column([[sg.MLine(key='-MLOutput-'+sg.WRITE_ONLY_KEY, size=(60,16))]], element_justification="center")],
-            [sg.Column([[self.init_game_button("-MOVE-", "Move"), self.init_game_button("-RESET-", "Reset")]], justification='center', element_justification="center")]
+            [sg.Column([
+                [sg.MLine(key='-MLOutput-' + sg.WRITE_ONLY_KEY, size=(60,16))]
+            ], element_justification="center")],
+            [sg.Column([[
+                self.init_game_button("-MOVE-", "Move"),
+                self.init_game_button("-RESET-", "Reset")
+            ]], justification='center', element_justification="center")]
         ]
         return layout 
 
@@ -44,9 +57,11 @@ class GUI():
         return sg.B(text, size=(20,3), key=event, pad=(2,2), button_color=(BOARDBORDER, DARKBUTTON))
 
     def init_layout(self):
-        return [
-            [sg.Column(self.init_game_board()), sg.VerticalSeparator(pad=(3,2)), sg.Column(self.init_game_status())]
-            ]
+        return [[
+            sg.Column(self.init_game_board()),
+            sg.VerticalSeparator(pad=(3,2)),
+            sg.Column(self.init_game_status())
+        ]]
 
     def render(self):
         if self.window is None :
@@ -61,10 +76,10 @@ class GUI():
         return fname
 
     def addLog(self, log):
-        self.window['-MLOutput-'+sg.WRITE_ONLY_KEY].print(log) 
+        self.window['-MLOutput-' + sg.WRITE_ONLY_KEY].print(log) 
 
     def clearLog(self):
-        self.window['-MLOutput-'+sg.WRITE_ONLY_KEY].update('')
+        self.window['-MLOutput-' + sg.WRITE_ONLY_KEY].update('')
 
     def input(self):
         return None
