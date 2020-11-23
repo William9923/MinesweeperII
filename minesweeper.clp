@@ -9,8 +9,6 @@
     (length$
       (find-all-facts
         ((?f bomb))
-        ;todo cari skeelilingnya ?f:r-1 >= ?r >= ?f:r+1 ...
-        ;skrg return semua bomb di board
         (and
           (>= ?f:row (- ?r 1)) (<= ?f:row (+ ?r 1))
           (>= ?f:col (- ?c 1)) (<= ?f:col (+ ?c 1))
@@ -54,7 +52,6 @@
 )
 
 (defrule solve
-  (not_bomb (row ?r) (col ?c))
   (value_cell (row ?r) (col ?c) (val ?x))
   ?f1 <- (to_check ?r ?c)
   (not (exists (bomb (row ?r) (col ?c))))
@@ -63,14 +60,16 @@
 => 
   (retract ?f1)
   (assert (checked ?r ?c ?x))
+  (assert (not_bomb (row ?r) (col ?c)))
+
   (printout t "value cell (" ?r "," ?c ") = " ?x ". neighbornya: " (bomb_neighbor ?r ?c) crlf)
+
   (if (= ?x (bomb_neighbor ?r ?c)) then
     (printout t "Checking " ?r " " ?c crlf)
+
     (loop-for-count (?dr -1 1) do
       (loop-for-count (?dc -1 1) do
-        (if (and (= ?dr 0) (= ?dc 0)) then
-          pass
-        else
+        (if (not (and (= ?dr 0) (= ?dc 0))) then
           (bind ?nr (+ ?r ?dr))
           (bind ?nc (+ ?c ?dc))
           (if (and
@@ -78,7 +77,6 @@
             (< ?nr ?boardn) (< ?nc ?boardn)
           ) then
 	          (printout t "-> " (+ ?r ?dr) " " (+ ?c ?dc) crlf)
-            (assert (not_bomb (row ?nr) (col ?nc)))
 	          (assert (to_check ?nr ?nc))
 	        )
         )
@@ -86,4 +84,3 @@
     )
   )
 )
-
