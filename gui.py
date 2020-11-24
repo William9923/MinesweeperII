@@ -16,11 +16,15 @@ FLAGICON="🚩"
 class GUI():
     def __init__(self, b_size=4):
       self.b_size = b_size
+      self.board = None
       self.window = None
       sg.ChangeLookAndFeel('Reddit')
 
-    def set_size(b_size):
+    def set_size(self,b_size):
       self.b_size = b_size
+
+    def set_board(self,board):
+      self.board = board
 
     def init_loading_screen(self):
         layout = [
@@ -95,7 +99,7 @@ class GUI():
       for i in range(self.b_size):
         for j in range(self.b_size):
           if board[i][j] != -1:
-            item = board[i][j]
+            item = self.board[i][j]
             self.window[(i, j)].update(item, disabled_button_color=(self.generate_color_theme(item),BOARDCOLOR),  disabled=True)
 
     def flushLog(self, logs):
