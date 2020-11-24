@@ -28,7 +28,7 @@ if __name__ == "__main__":
   fact = "(checked 0 1 0)"
 
   if (check(fact)):
-    row,col,val = parser(fact)
+    row,col,val = parse(fact)
     # ganti append sementara, nanti ganti dengan kapan bom ditemukan
     history.append(generate_history_state(history[len(history)-1], row, col, val))
   pprint (history)

@@ -4,7 +4,7 @@ from pprint import pprint
 
 from gui import GUI
 from fact_generator import generate_facts, generate_board
-from setup import reader, run, get_result
+from setup import reader, run
 
 CLP_FILE = "minesweeper.clp"
 
@@ -20,32 +20,38 @@ if __name__ == "__main__" :
     board = generate_board(board_size, list_bomb)
     facts = generate_facts(board_size, list_bomb)
     gui.set_size(board_size)
+    gui.set_board(board)
 
 
     # Run the Knowledge Based System
-    res = run(CLP_FILE, facts)
-
     # Parse Result 
-    history, logs = get_result(res, board_size)
+    history , logs = run(CLP_FILE, facts, board_size)
+    init = [[-1 for i in range(board_size)] for i in range(board_size)]
+    init[0][0] = 0
+    history.insert(0, init)
+    logs.insert(0,["START"])
 
     # render the gui 
     gui.render()
+    history.append([[0 for i in range(board_size)] for i in range(board_size)])
+    logs.append(["DONE"])
 
-    # Processing the output one by one
     position = 0
     while True:
+        gui.update(history[position], logs[position])
         event, values = gui.window.read()
 
-        if event is None or (position >= len(history) or position >= len(logs)) : 
+        if event is None or (position > len(history)-1) : 
             break
 
         if event == '-RESET-':
             gui.clearLog()
+            gui.resetBoard()
             position = 0
 
         if event == '-MOVE-':
-            pprint(logs[position])
-            pprint(history[position])
             position += 1 
+            gui.update(history[position+1], logs[position])
+            
 
     gui.window.close() 

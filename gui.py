@@ -24,7 +24,10 @@ class GUI():
       self.b_size = b_size
 
     def set_board(self,board):
-      self.board = board
+        self.board = [[0 for i in range(self.b_size)] for i in range(self.b_size)]
+        for i in range(self.b_size):
+            for j in range(self.b_size):
+                self.board[i][j] = board[i][j] if board[i][j] < 100 else BOMBICON
 
     def init_loading_screen(self):
         layout = [
@@ -86,8 +89,10 @@ class GUI():
       
   
     def render(self):
+        print("his dis")
         if self.window is None :
-            self.window = sg.Window("Minesweeper", self.init_layout(), keep_on_top=True, resizable=False)
+            print("hid dis")
+            self.window = sg.Window("Minesweeper", self.init_layout(), keep_on_top=True, resizable=False, finalize=True)
 
     def update(self, board, facts):
       if self.window is None:
@@ -104,6 +109,7 @@ class GUI():
 
     def flushLog(self, logs):
       for log in logs:
+        print(log)
         self.addLog(log)
 
 
@@ -120,6 +126,12 @@ class GUI():
 
     def clearLog(self):
         self.window['-MLOutput-' + sg.WRITE_ONLY_KEY].update('')
+
+    def resetBoard(self):
+        for i in range(self.b_size):
+            for j in range(self.b_size):
+                if i + j != 0:
+                    self.window[(i, j)].update('', disabled=True)
 
     def input(self):
         return None

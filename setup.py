@@ -4,7 +4,7 @@ import clips
 from pprint import pprint
 
 from fact_generator import generate_facts
-from parser import generate_init_state, check, parse, BOMBPATTERN, NOTBOMBPATTERN
+from utils import generate_init_state, check, parse, BOMBPATTERN, NOTBOMBPATTERN, generate_history_state
 
 def reader(input_file:str):
   list_bomb = []
@@ -16,7 +16,7 @@ def reader(input_file:str):
           list_bomb.append((x, y))
   return board_size, list_bomb
 
-def run(clp_file:str, facts):
+def run(clp_file:str, facts, board_size):
   env = Environment()
   env.batch_star(clp_file)
   for fact in facts:
@@ -24,20 +24,17 @@ def run(clp_file:str, facts):
   
   env.run()
   print("Run clips done")
-  return env.facts() 
 
-def get_result(facts, board_size):
   history = [generate_init_state(board_size)]
   logs = []
 
   log = []
   state = generate_init_state(board_size)
-  for fact in facts:
-    log.append(fact)
+  for fact in env.facts():
+    log.append(str(fact))
     if "bomb" in str(fact) and check(fact,BOMBPATTERN):
       row, col = parse(fact,BOMBPATTERN)
       state = generate_history_state(state, row, col, 1)
-
       logs.append(log)
       history.append(state)
       log = []
@@ -87,15 +84,6 @@ def setup(clp_file, input_file):
   print("not bomb count:", not_bomb_count)
   print("bomb count:", total_count - not_bomb_count)
 
-  # print("Testing GUI")
-  # board = generate_init_state(board_size)
-  # for fact in facts_list:
-  #   if check(fact):
-  #     print(fact)
-  #     row, col, val = parser(fact)
-  #     board[row][col] = val
-  #     pprint(board)
-  
 if __name__ == '__main__' :
   input_file = "input_10x10_8.txt"
   clp_file = "minesweeper.clp"
