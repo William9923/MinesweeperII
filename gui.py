@@ -89,9 +89,7 @@ class GUI():
       
   
     def render(self):
-        print("his dis")
         if self.window is None :
-            print("hid dis")
             self.window = sg.Window("Minesweeper", self.init_layout(), keep_on_top=True, resizable=False, finalize=True)
 
     def update(self, board, facts):
@@ -108,13 +106,11 @@ class GUI():
             self.window[(i, j)].update(item, disabled_button_color=(self.generate_color_theme(item),BOARDCOLOR),  disabled=True)
 
     def flushLog(self, logs):
-      for log in logs:
-        print(log)
-        self.addLog(log)
-
+        for log in logs:
+            self.addLog(log)
 
     def initInputFile(self):
-        event, values = sg.Window('My Script',
+        event, values = sg.Window('Open File',
                     [[sg.Text('Testcase to open')],
                     [sg.In(), sg.FileBrowse()],
                     [sg.Open(), sg.Cancel()]]).read(close=True)
@@ -133,8 +129,6 @@ class GUI():
                 if i + j != 0:
                     self.window[(i, j)].update('', disabled=True)
 
-    def input(self):
-        return None
 
 
 

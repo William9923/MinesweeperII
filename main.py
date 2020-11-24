@@ -26,6 +26,8 @@ if __name__ == "__main__" :
     # Run the Knowledge Based System
     # Parse Result 
     history , logs = run(CLP_FILE, facts, board_size)
+    for log in logs:
+        pprint(log)
     init = [[-1 for i in range(board_size)] for i in range(board_size)]
     init[0][0] = 0
     history.insert(0, init)
@@ -37,8 +39,8 @@ if __name__ == "__main__" :
     logs.append(["DONE"])
 
     position = 0
+    gui.update(history[position], logs[position])
     while True:
-        gui.update(history[position], logs[position])
         event, values = gui.window.read()
 
         if event is None or (position > len(history)-1) : 
