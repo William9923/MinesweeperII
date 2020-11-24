@@ -42,6 +42,8 @@ def setup(clp_file, input_file):
       total_count += 1
     if "not_bomb" in str(fact):
       not_bomb_count += 1
+    if "value" in str(fact):
+      print("fakta : ", fact)
   print("not bomb count:", not_bomb_count)
   print("bomb count:", total_count - not_bomb_count)
 

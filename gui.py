@@ -96,7 +96,7 @@ class GUI():
         for j in range(self.b_size):
           if board[i][j] != -1:
             item = board[i][j]
-            self.window[(i, j)].update(item, disabled_button_color=(self.generate_color_theme(item), disabled=True))
+            self.window[(i, j)].update(item, disabled_button_color=(self.generate_color_theme(item),BOARDCOLOR),  disabled=True)
 
     def flushLog(self, logs):
       for log in logs:

@@ -4,6 +4,9 @@ from pprint import pprint
 
 FACTPATTERN=r"checked\s\d\s\d\s\d"
 
+BOMBPATTERN=r"\(bomb\s\(row\s\d\)\s\(col\s\d\)\)"
+NOTBOMBPATTERN=r"\(not_bomb\s\(row\s\d\)\s\(col\s\d\)\)"
+
 def parser(fact:str):
   needed_string = re.findall(FACTPATTERN, str(fact))[0]
   location = re.findall(r'[0-9]', str(needed_string))
