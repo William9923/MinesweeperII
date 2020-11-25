@@ -2,9 +2,9 @@
 ---
 
 ### Anggota
-Muhammad Zunan Alfikri (13518019)
-Jonathan Yudi Gunawan (13518084)
-Annisa Ayu Pramesti  (13518085)
+Muhammad Zunan Alfikri (13518019)\n
+Jonathan Yudi Gunawan (13518084)\n
+Annisa Ayu Pramesti  (13518085)\n
 William (13518138)
 
 ### Dependencies 
@@ -35,20 +35,4 @@ $ source venv/bin/activate
 ### Download required dependencies:
 ```bash
 pip install -r requirements.txt
-```
-
-### Adding dependencies
-```bash
-$ pip freeze > requirements.txt
-```
-
-### Available scripts :
-Simply just run this command to play this game, even you don't have the dependencies installed : 
-Windows : 
-```bash
-run.bat
-```
-Linux/MacOS: 
-```bash
-run.sh
 ```

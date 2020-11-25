@@ -43,7 +43,8 @@ if __name__ == "__main__" :
     while True:
         event, values = gui.window.read()
 
-        if event is None or (position > len(history)-1) : 
+        if event is None or (position == len(history)-2) : 
+            print("Finished")
             break
 
         if event == '-RESET-':

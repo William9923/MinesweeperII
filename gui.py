@@ -10,7 +10,7 @@ GREEN="#28df99"
 BLUE="#0f3057"
 RED="#ec0101"
 
-BOMBICON="💣"
+BOMBICON="X"
 FLAGICON="🚩"
 
 class GUI():
