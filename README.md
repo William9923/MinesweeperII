@@ -11,6 +11,15 @@
 1. PySimpleGUI
 2. ClipsPy
 
+### How to run
+1. Setup the virtualenv
+2. Enter command 
+```bash
+python3 main.py
+```
+3. Enter the test file
+4. The program will show the output
+
 ### How to setup
 1. Install virtualenv if you haven't
 ```bash
