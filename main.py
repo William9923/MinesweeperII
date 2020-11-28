@@ -43,7 +43,7 @@ if __name__ == "__main__" :
     while True:
         event, values = gui.window.read()
 
-        if event is None or (position == len(history)-2) : 
+        if event is None : 
             print("Finished")
             break
 
@@ -53,8 +53,10 @@ if __name__ == "__main__" :
             position = 0
 
         if event == '-MOVE-':
-            position += 1 
-            gui.update(history[position+1], logs[position])
-            
+            if (position < len(history)-2) : 
+              position += 1 
+              gui.update(history[position+1], logs[position])
+            else :
+              print("Max Move Reached")
 
     gui.window.close() 

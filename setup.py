@@ -102,7 +102,9 @@ def setup(clp_file, input_file):
     if total_count + not_bomb_count != board_size * board_size:
         for bomb in list_fact_bomb:
             if bomb not in correct_bomb:
-                correct_bomb.append(f"(row {bomb.split(')')[0][-1]}) (col {bomb.split(')')[1][-1]})")
+                row_col = f"(row {bomb.split(')')[0][-1]}) (col {bomb.split(')')[1][-1]})"
+                env.assert_string(f"(bomb {row_col})")
+                correct_bomb.append(row_col)
                 total_count += 1
 
     print("not bomb count:", not_bomb_count)
