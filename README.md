@@ -2,10 +2,10 @@
 ---
 
 ### Anggota
-Muhammad Zunan Alfikri (13518019)\n
-Jonathan Yudi Gunawan (13518084)\n
-Annisa Ayu Pramesti  (13518085)\n
-William (13518138)
+- Muhammad Zunan Alfikri (13518019)
+- Jonathan Yudi Gunawan (13518084)
+- Annisa Ayu Pramesti  (13518085)
+- William (13518138)
 
 ### Dependencies 
 1. PySimpleGUI
