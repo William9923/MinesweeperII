@@ -35,7 +35,8 @@
 )
 
 (defrule bomb_remaining
-  (declare (salience -10))
+  (declare (salience 1))
+
   (total_bomb (n ?i))
 =>
   (assert (bomb_rem (- ?i (all_bomb))))
@@ -44,7 +45,8 @@
 ;(do-for-all-facts ((?f not_bomb)) (> ?f:row 0) (printout t ?f:row crlf))
 
 (defrule is_solved
-  (declare (salience -9))
+  (declare (salience 1))
+
   (bomb_rem 0)
 =>
   (printout t "solved" crlf)
@@ -52,7 +54,8 @@
 )
 
 (defrule is_not_solved
-  (declare (salience -9))
+  (declare (salience 1))
+
   ?f <- (bomb_rem ?x)
 =>
   (printout t "not solved" crlf)
@@ -60,7 +63,8 @@
 )
 
 (defrule floodfill
-  (declare (salience 100))
+  (declare (salience 5))
+  
   ; trigger
   ?f1 <- (to_open ?r ?c ?x)
   
@@ -93,8 +97,19 @@
   )
 )
 
+(defrule to_check_is_bomb
+  (declare (salience 3))
+
+  ?f1 <- (to_check ?r ?c)
+  (exists (bomb (row ?r) (col ?c)))
+  (value_cell (row ?r) (col ?c) (val ?x))
+=>
+  (retract ?f1)
+)
+
 (defrule to_check_is_not_bomb
-  (declare (salience -8))
+  (declare (salience 3))
+
   ?f1 <- (to_check ?r ?c)
   (not (exists (bomb (row ?r) (col ?c))))
   (value_cell (row ?r) (col ?c) (val ?x))
@@ -106,17 +121,11 @@
   (printout t "value cell (" ?r "," ?c ") = " ?x ". neighbornya: " (bomb_neighbor ?r ?c) crlf)
 )
 
-(defrule to_check_is_bomb
-  (declare (salience -8))
-  ?f1 <- (to_check ?r ?c)
-  (exists (bomb (row ?r) (col ?c)))
-  (value_cell (row ?r) (col ?c) (val ?x))
-=>
-  (retract ?f1)
-)
+
 
 (defrule to_flag_bomb
-  (declare (salience 98))
+  (declare (salience 4))
+
   (to_open ?r ?c ?x)
   (board_size (n ?boardn))
 =>
@@ -143,13 +152,16 @@
 
 
 (defrule to_increment_rule
+  (declare (salience 2))
+
   ?f2 <- (to_increment ?rr ?cc ?r ?c)
 =>
   (retract ?f2)
 )
 
 (defrule to_increment_rule
-  (declare (salience 5))
+  (declare (salience 2))
+
   ?f <- (cnt (r ?rr) (c ?cc) (n ?n))
   ?f2 <- (to_increment ?rr ?cc ?r ?c)
   (or
@@ -164,7 +176,8 @@
 )
 
 (defrule find_bomb_nearby
-  (declare (salience 97))
+  (declare (salience 2))
+  
   ?f <- (cnt (r ?r) (c ?c) (n 8))
   
   ; assign var
@@ -189,7 +202,8 @@
 )
 
 (defrule to_flag_rule
-  (declare (salience -1))
+  (declare (salience 1))
+
   ?f <- (test_to_flag ?r ?c)
   (not (or
     (exists (to_open ?r ?c ?x2))
@@ -203,7 +217,8 @@
 )
 
 (defrule flag_is_bomb
-  (declare (salience 95))
+  (declare (salience 1))
+
   ; trigger
   ?f1 <- (to_flag ?r ?c)
   
@@ -235,6 +250,8 @@
 )
 
 (defrule subtract_neighbor_rule
+  (declare (salience 6))
+
   ?f <- (subtract_neighbor ?r ?c)
   ?f2 <- (value_cell (row ?r) (col ?c) (val ?x))
 =>
@@ -243,6 +260,8 @@
 )
 
 (defrule flag_is_not_bomb
+  (declare (salience 6))
+
   ?f1 <- (to_flag ?r ?c)
   (or
     (exists (to_check ?r ?c))

@@ -10,17 +10,24 @@ GREEN="#28df99"
 BLUE="#0f3057"
 RED="#ec0101"
 
-BOMBICON="💣"
+BOMBICON="X"
 FLAGICON="🚩"
 
 class GUI():
     def __init__(self, b_size=4):
       self.b_size = b_size
+      self.board = None
       self.window = None
       sg.ChangeLookAndFeel('Reddit')
 
-    def set_size(b_size):
+    def set_size(self,b_size):
       self.b_size = b_size
+
+    def set_board(self,board):
+        self.board = [[0 for i in range(self.b_size)] for i in range(self.b_size)]
+        for i in range(self.b_size):
+            for j in range(self.b_size):
+                self.board[i][j] = board[i][j] if board[i][j] < 100 else BOMBICON
 
     def init_loading_screen(self):
         layout = [
@@ -83,7 +90,7 @@ class GUI():
   
     def render(self):
         if self.window is None :
-            self.window = sg.Window("Minesweeper", self.init_layout(), keep_on_top=True, resizable=False)
+            self.window = sg.Window("Minesweeper", self.init_layout(), keep_on_top=True, resizable=False, finalize=True)
 
     def update(self, board, facts):
       if self.window is None:
@@ -95,16 +102,15 @@ class GUI():
       for i in range(self.b_size):
         for j in range(self.b_size):
           if board[i][j] != -1:
-            item = board[i][j]
+            item = self.board[i][j]
             self.window[(i, j)].update(item, disabled_button_color=(self.generate_color_theme(item),BOARDCOLOR),  disabled=True)
 
     def flushLog(self, logs):
-      for log in logs:
-        self.addLog(log)
-
+        for log in logs:
+            self.addLog(log)
 
     def initInputFile(self):
-        event, values = sg.Window('My Script',
+        event, values = sg.Window('Open File',
                     [[sg.Text('Testcase to open')],
                     [sg.In(), sg.FileBrowse()],
                     [sg.Open(), sg.Cancel()]]).read(close=True)
@@ -117,8 +123,12 @@ class GUI():
     def clearLog(self):
         self.window['-MLOutput-' + sg.WRITE_ONLY_KEY].update('')
 
-    def input(self):
-        return None
+    def resetBoard(self):
+        for i in range(self.b_size):
+            for j in range(self.b_size):
+                if i + j != 0:
+                    self.window[(i, j)].update('', disabled=True)
+
 
 
 
